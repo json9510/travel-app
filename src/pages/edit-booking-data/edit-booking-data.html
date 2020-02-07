@@ -1,0 +1,59 @@
+<!--
+  Generated template for the EditBookingDataPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Editar Informaci&oacute;n</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form (submit)="saveEditData()">
+    <ion-card>
+      <ion-card-header>
+        Informaci&oacute;n persona
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item *ngIf="data.type_person=='adults'">
+          <ion-label>¿Pasajero Principal?</ion-label>
+          <ion-checkbox [(ngModel)]="data.is_principal" name="is_principal" value="data.is_principal"></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>
+            Nombres y apellidos
+          </ion-label>
+          <ion-input [(ngModel)]="data.full_name" name="full_name" value="data.full_name" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>
+            Tipo de documento
+          </ion-label>
+          <ion-select type="text" [(ngModel)]="data.type_document" name="type_document">
+            <ion-option value="RC">Registro Civil</ion-option>
+            <ion-option value="TI">Tarjeta de Identidad</ion-option>
+            <ion-option value="CC">C&eacute;dula de Ciudadan&iacute;a</ion-option>
+            <ion-option value="CE">C&eacute;dula de Extranjer&iacute;a</ion-option>
+            <ion-option value="PS">Pasaporte</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>
+            N&uacute;mero de documento
+          </ion-label>
+          <ion-input [(ngModel)]="data.number_document" name="number_document" value="data.number_document" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>Fecha de cupleaños</ion-label>
+          <ion-datetime [(ngModel)]="data.birthday_date" name="birthday_date" value="data.birthday_date" display-format="MMM DD, YYYY HH:mm"></ion-datetime>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+    <button ion-button full>Guardar</button>
+  </form>
+</ion-content>

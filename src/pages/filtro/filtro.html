@@ -1,0 +1,147 @@
+<!--
+  Generated template for the FiltroPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+
+<ion-content>
+
+    <div class="apply-filters">
+        <button ion-button icon-only (click)="closeFilters()">
+            <ion-icon name="close"></ion-icon>
+        </button>
+        <button ion-button float-right icon-only (click)="applyFilters()">
+            Aplicar
+        </button>
+    </div>
+
+    <div class="body-content">
+        <ion-grid style="margin-top: 35px;margin-bottom: 15px;">
+            <ion-row>
+                <ion-col col-6>
+                    <div class="price-order-container" float-right>
+                        <div class="price-order-1 {{order.asc}}" (click)="orderByPrice('asc')">
+                            <ion-icon class="small-font" name="logo-usd"></ion-icon>
+                            <ion-icon class="mid-font" name="logo-usd"></ion-icon>
+                            <ion-icon name="logo-usd"></ion-icon>
+                        </div>
+                        <label>Menor
+                            <br> precio</label>
+                    </div>
+                </ion-col>
+                <ion-col col-6>
+                    <div class="price-order-container">
+                        <div class="price-order-2 {{order.desc}}" (click)="orderByPrice('desc')">
+                            <ion-icon name="logo-usd"></ion-icon>
+                            <ion-icon class="mid-font" name="logo-usd"></ion-icon>
+                            <ion-icon class="small-font" name="logo-usd"></ion-icon>
+                        </div>
+                        <label>Mayor
+                            <br> precio</label>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    
+        <div class="filter-group">
+            <div class="tittle">Ciudad de Origen</div>
+            <div class="divider"></div>
+            <div class="radio_button_temporada">
+                <ion-list radio-group [(ngModel)]="departure_city">
+                    <ion-item *ngFor="let city of cities">
+                        <ion-label>{{ city.name }}</ion-label>
+                        <ion-radio value="{{ city.id }}"></ion-radio>
+                    </ion-item>
+                </ion-list>
+            </div>
+        </div>
+    
+        <div class="filter-group">
+            <div class="tittle">Grupo</div>
+            <div class="divider"></div>
+            <div class="lalianxa-btn">
+                <img (click)="setLalianxa()" [ngClass]="{ 'selected' : this.lalianxa }" src="../../assets/imgs/alianza.png">
+            </div>
+        </div>
+    
+        <div class="filter-group">
+            <div class="tittle">presupuesto</div>
+            <div class="divider"></div>
+        </div>
+        <div class="range-price">
+            <ion-range min="1000000" max="15000000" pin="true" step="1000000" snaps="true" dualKnobs="true" [(ngModel)]="price">
+            </ion-range>
+            <ion-label float-left>{{price.lower | currency: "COP": "$ "}} </ion-label>
+            <ion-label float-right>{{price.upper | currency: "COP": "$ "}} </ion-label>
+        </div>
+    
+        <div class="filter-group">
+            <div class="tittle">noches de alojamiento</div>
+            <div class="divider"></div>
+        </div>
+        <div>
+            <ion-range min="1" max="15" dualKnobs="true" [(ngModel)]="nights">
+                <ion-label range-left>{{nights.lower}}</ion-label>
+                <ion-label range-right>{{nights.upper}} </ion-label>
+            </ion-range>
+        </div>
+    
+        <div class="filter-group">
+            <div class="tittle">Temporada</div>
+            <div class="divider"></div>
+        </div>
+        <div class="radio_button_temporada" style="margin-bottom: 60px;">
+            <ion-list radio-group [(ngModel)]="season">
+                <ion-item>
+                    <ion-label>Cualquier Temporada</ion-label>
+                    <ion-radio value=""></ion-radio>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Temporada Baja</ion-label>
+                    <ion-radio value="ninguna"></ion-radio>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Reyes</ion-label>
+                    <ion-radio value="Reyes"></ion-radio>
+                </ion-item>
+    
+                <ion-item>
+                    <ion-label>Navidad</ion-label>
+                    <ion-radio value="Navidad"></ion-radio>
+                </ion-item>
+    
+                <ion-item>
+                    <ion-label>Feriados</ion-label>
+                    <ion-radio value="Feriados"></ion-radio>
+                </ion-item>
+    
+                <ion-item>
+                    <ion-label>Mitad de año</ion-label>
+                    <ion-radio value="Mitad de año"></ion-radio>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Quinceañeras</ion-label>
+                    <ion-radio value="Quinceañeras"></ion-radio>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Semana Santa</ion-label>
+                    <ion-radio value="Semana Santa"></ion-radio>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Semana Receso</ion-label>
+                    <ion-radio value="Semana Receso"></ion-radio>
+                </ion-item>
+            </ion-list>
+        </div>
+    </div>
+
+    <div class="filter-group fixed-button" text-center>
+        <button ion-button icon-start text-center (click)="clearFilters()">
+            <ion-icon name="trash"></ion-icon>
+            Limpiar Filtros
+        </button>
+    </div>
+
+</ion-content>

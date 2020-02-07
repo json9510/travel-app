@@ -1,0 +1,50 @@
+<!--
+  Generated template for the LoginPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+<ion-content padding>
+
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="#">
+                <img src="../../assets/imgs/logo-login.png" alt="Tapp">
+            </a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+            <p class="login-box-msg">Ingrese sus datos para iniciar sesión</p>
+
+            <div class="form-group has-feedback">
+                <ion-input placeholder="Correo" type="email" [(ngModel)]="userData.username"></ion-input>
+                <ion-icon name="mail" class="form-control-feedback"></ion-icon>
+            </div>
+
+            <div class="form-group has-feedback">
+                <ion-input placeholder="Contraseña" type="password" [(ngModel)]="userData.password"></ion-input>
+                <ion-icon name="lock" class="form-control-feedback"></ion-icon>
+            </div>
+
+            <div class="center-button">
+                <button ion-button (click)="login()" full>Ingresar</button>
+            </div>
+
+            <div class="social-auth-links text-center">
+                <p><strong>O</strong></p>
+                <a href="#" class="btn btn-block btn-social btn-facebook btn-flat">
+                    <ion-icon name="logo-facebook"></ion-icon>Ingresar usando Facebook</a>
+                <a href="#" class="btn btn-block btn-social btn-google btn-flat">
+                    <ion-icon name="logo-googleplus"></ion-icon>Ingresar usando Google+</a>
+            </div>
+
+            <div class="forget-sing-up">
+                <a href="#">Olvidé mi contraseña</a><br>
+                <a (click)="openRegistroPage()" class="text-center">Registrar un nuevo Usuario</a>
+            </div>
+
+        </div>
+    </div>
+
+</ion-content>

@@ -1,0 +1,44 @@
+<!--
+  Generated template for the WelcomePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+<ion-content>
+
+    <ion-slides [speed]="500" [loop]='false' [pager]="true">	   
+        <ion-slide>
+            <!--<div class="titulo_cont">
+                <div>
+                    <p class="titulo_slider1">¡Nunca fue tan fácil!</p>
+                <p class="descripcion_slider1">Busca y comparte bloqueos y salidas <br> especiales, sensilla y rapidamente</p>
+                </div>
+                
+            </div>-->
+            <div class="inicio_slider_1">
+            <h1>¡Nunca fue tan fácil!</h1>
+            <h3>Busca y comparte bloqueos y salidas <br> especiales, sencilla y rápidamente.</h3>
+            <button (click)="goHome()" class="boton_empezar">Comenzar</button>
+            </div>
+        </ion-slide>
+        <ion-slide>
+            <!--<img style="width:100%;height:100%;" src="assets/imgs/inicio_2.jpg">
+            <div class="titulo_cont2">
+                <div>
+                    <p class="titulo_slider_2">¡Los mejores <br> precios!</p>
+                <p class="descrip_slider_2">Encuentra aqui la mas amplia oferta de bloqueos y salidas especiales</p>
+                </div>
+                
+            </div>
+            
+            <img src="assets/imgs/inicio_2.jpg">-->
+            <div class="inicio_slider_2">
+            <h1>¡Los mejores <br> precios!</h1>
+            <h3>Encuentra aquí la más amplia oferta de bloqueos y salidas especiales.</h3>
+            <button (click)="goHome()" class="boton_empezar">Comenzar</button>  
+            </div>
+        </ion-slide>
+    </ion-slides>
+
+</ion-content>

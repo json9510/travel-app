@@ -1,0 +1,10 @@
+{
+  "name": "travelapp",
+  "integrations": {
+    "cordova": {}
+  },
+  "proxies": [
+
+  ],
+  "type": "ionic-angular"
+}

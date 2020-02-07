@@ -1,0 +1,20 @@
+page-detalle-proveedor {
+
+	.logo {
+		width: 60%;
+		margin: 0 auto;
+		text-align: center;
+	}
+	.description {
+		width: 80%;
+		margin: 20px auto;
+		color: #555;
+		font-size: 2rem;
+	}	
+	.association {
+		color: #E49F54;
+	}
+	.primary-info {
+		color: color($colors, primary);
+	}
+}

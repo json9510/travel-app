@@ -1,0 +1,21 @@
+page-favoritos {
+
+	.semi-transparent {
+		opacity: 0.5;
+	}	
+	.stars {
+		color: #E1A252
+	}
+	.empty-list {
+		text-align: center;
+		font-size: 4rem;
+		color: #787A79;
+		font-weight: bold;		
+	}
+	.empty-list div:nth-child(2) {
+		font-size: 2rem;	
+	}
+	.empty-list img {
+		max-width: 60%;
+	}	
+}

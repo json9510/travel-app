@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Proveedores
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card *ngFor="let company of companies" (click)="openDetalleProveedorPage(company.id)">
+    <img src="{{backendProvider.apiServer}}/{{company.logo_dir}}thumbnail-{{company.logo}}" />
+    <ion-card-content>
+      <ion-card-title>
+        {{company.name}}
+      </ion-card-title>
+      <p>
+        <ion-icon name="call"></ion-icon>{{' ' + company.cellphone}}</p>
+      <p>
+        <ion-icon name="logo-whatsapp"></ion-icon>{{' ' + company.whatsapp}}</p>
+      <p>
+        <ion-icon name="mail"></ion-icon>{{' ' + company.email}}</p>
+      <p>
+        <ion-icon name="globe"></ion-icon>{{' ' + company.website}}</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

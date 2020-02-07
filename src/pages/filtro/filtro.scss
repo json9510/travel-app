@@ -1,0 +1,159 @@
+page-filtro {
+
+	.scroll-content{
+		padding: 0px !important;
+		overflow-y: hidden !important;
+	}
+
+	.content {
+		background-image: -webkit-gradient(linear, left top, right top, from(#37A1C8), to(#37A19F));
+    	background-image: linear-gradient(to right, #37A1C8, #37A19F);
+		color: #fff;
+	}
+	.button {
+		background: none;
+		box-shadow: none;
+	}
+	.divider {
+		border-bottom: 1px solid #fff;
+		width: 100%;
+		position: absolute;
+		left: 0px;
+		top: 5px;
+		z-index: -1;
+	}
+	.price-order-1, .price-order-2 {
+		background: #479AA8;
+		border-radius: 50%;
+		color: #fff;
+		width: 3.6em;
+		height:	3.6em;
+		padding-top: 1em;	
+		margin-bottom: 5px;
+		border: 1px solid #fff;
+	}
+	.price-order-container {
+		width: 3.6em;
+		text-align: center;
+		margin: 20px 1.5em 0;	
+		cursor: pointer;
+	}
+	.small-font {
+		font-size: 0.8em;
+	}
+	.mid-font {
+		font-size: 1.0em;
+	}
+	.top-buttons {
+		position: relative;
+	}
+	.filter-group {
+		position: relative;
+		margin: 50px 0;
+	}
+	.filter-group:first-of-type {
+		margin: 0;
+	}
+	.active {
+		background: #fff;
+	
+	}
+	.active .icon{
+		color: #37a1b4;	
+	}	
+	.lalianxa-btn {
+		width: 3.7em;
+		margin: 20px auto;
+		cursor: pointer;	
+	}	
+	.lalianxa-btn > img {
+		opacity: 0.5;		
+	}	
+	.selected {
+		opacity: 1.0 !important;
+	}	
+	.tittle {
+		width: 51%;
+		margin: 0 auto;
+		text-align: center;
+		text-transform: uppercase;
+		background-image: -webkit-gradient(linear, left top, right top, from(#37a1b7), to(#37a1b1));
+    	background-image: linear-gradient(to right, #37a1b7, #37a1b1);
+	}
+	.range-md .range-bar-active, .range-md .range-knob {
+	 	background: #fff;
+	 }
+	.range-md .range-knob{
+		width: 30px;
+		height: 30px;
+		left: 6px;
+		top:5px;		
+	}
+	.radio_button_temporada .list{
+		width: 60%!important;
+		margin: 0 auto;
+		border: 1px solid white;
+		border-radius: 15px;
+		margin-top: 10px;
+	}
+	.radio_button_temporada .label{
+		color: white;
+	}	
+	.radio_button_temporada .item, .radio_button_temporada .radio-checked {
+		color: #fff;
+		background: none;
+	}		
+	.radio_button_temporada .radio-checked .radio-inner{
+		background: white;
+	} 	
+	.radio_button_temporada .radio-icon{
+		border-color: white;
+	}
+
+	.apply-filters{
+		position: fixed;
+		border-bottom: 1px solid;
+		width: 100%;
+		z-index: 9999;
+		padding: 0 15px !important;
+		background-image: -webkit-gradient(linear, left top, right top, from(#37A1C8), to(#37A19F));
+		background-image: linear-gradient(to right, #37A1C8, #37A19F);
+	}
+
+	.clean-filters{
+		position: fixed;
+		top: 97%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 100%;
+		background-image: -webkit-gradient(linear, left top, right top, from(#37A1C8), to(#37A19F));
+		background-image: linear-gradient(to right, #37A1C8, #37A19F);
+	}
+
+	.fixed-button{
+		position: fixed !important;
+		bottom: 0 !important;
+		margin: 0 !important;
+		text-align: center !important;
+		width: 100% !important;
+		background-image: -webkit-gradient(linear, left top, right top, from(#37A1C8), to(#37A19F)) !important;
+		background-image: linear-gradient(to right, #37A1C8, #37A19F) !important;
+	}
+
+	.body-content{
+		overflow-y: scroll !important;
+		height: 100%;
+		left: 0;
+		right: 0;
+		top: 0;
+		position: absolute;
+		overflow-x: hidden;
+		overflow-y: scroll;
+		-webkit-overflow-scrolling: touch;
+		will-change: scroll-position;
+	}
+
+	.range-price{
+		padding: 0 15px !important;
+	}
+}

@@ -1,0 +1,61 @@
+page-welcome {
+
+    .slide-zoom {
+    	height:100%;
+    }
+    .inicio_slider_1 {
+      background-image: url('../../assets/imgs/inicio_1.jpg');
+      background-repeat: no-repeat;
+          background-position: center;
+          background-size: cover;
+          width: 100%;
+          height: 100%;
+
+	}
+	
+    .inicio_slider_2 {
+      background-image: url('../../assets/imgs/inicio_2.jpg');
+      background-repeat: no-repeat;
+          background-position: center;
+          background-size: cover;
+          width: 100%;
+          height: 100%;
+    }
+	h1, h3, .boton_empezar {
+		position: absolute;
+		color: #fff;
+		text-align: center;	
+	}
+	.inicio_slider_1 h1, .inicio_slider_1 h3 {
+		width: 90%;		
+	}	
+	.inicio_slider_1 h1 {
+		top: 15px;
+		left: 5%;
+	}
+	.inicio_slider_1 h3 {
+		top: 85px;
+		left: 5%;	
+		font-size: 1.8rem;
+	}
+	.inicio_slider_2 h1 {
+		top: 35%;
+		right: 20px;
+	}
+	.inicio_slider_2 h3 {
+		top: 50%;
+		right: 5px;	
+		width: 180px;
+		font-size: 1.3rem;
+	}
+    .boton_empezar{
+      position: absolute;
+	  background: #C59B07;
+	  bottom: 100px;
+	  left: calc(50% - 70px);
+	  width: 140px;
+	  padding: 6px 2px;
+	  font-size: 20px;
+	  border-radius: 8px;
+    }	
+}

@@ -1,0 +1,119 @@
+<!--
+  Generated template for the ReservarPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Reservar</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <div class="form-box">
+    <form [formGroup]="book" (ngSubmit)="bookForm()">
+      <h3 class="title-detail-booking">INFORMACI&Oacute;N DE LA RESERVA</h3>
+      <ion-item>
+        <ion-label stacked>Correo</ion-label>
+        <ion-input type="email" formControlName="email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Teléfono</ion-label>
+        <ion-input type="tel" formControlName="phone"></ion-input>
+      </ion-item>
+
+      <ion-item *ngIf="package?.prices">
+        <ion-label stacked>Hotel</ion-label>
+        <ion-select (ionChange)="getPrices($event)" formControlName="price_id" name="price_id">
+          <ion-option *ngFor="let price of package?.prices; let i = index" value="{{price.id}}">{{price.hotel ? price.hotel : 'opción '+i}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="bedrooms.length > 0" >
+        <ion-label stacked>Acomodaci&oacute;n</ion-label>
+        <ion-select formControlName="bedroom_id" name="bedroom_id">
+          <ion-option *ngFor="let data of bedrooms" value="{{ data.code }}">{{ data.name }} - ${{ data.price }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+
+      <ion-item>
+        <ion-label>Fechas de Salida y Llegada</ion-label>
+        <ion-select formControlName="availability_id">
+          <ion-option *ngFor="let availability of availables" value="{{availability.id}}">
+            {{availability.start_date | moment : 'YYYY-MM-DD'}} a {{availability.end_date | moment : 'YYYY-MM-DD'}}
+          </ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Adultos, Mayores de 12 años:</ion-label>
+        <ion-select [(ngModel)]="countData" disabled="{{disabledSelect}}" formControlName="adults" (ionChange)="openForm($event, 'adults')">
+          <ion-option *ngFor="let numberOption of numberOptions" value="{{numberOption}}">{{numberOption}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Niños entre 2 y 12 años:</ion-label>
+        <ion-select [(ngModel)]="countDataChildren" disabled="{{disabledSelectChildren}}" formControlName="children" (ionChange)="openForm($event, 'children')">
+          <ion-option *ngFor="let numberOption of numberOptions" value="{{numberOption}}">{{numberOption}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Infantes entre 0 y 2 años</ion-label>
+        <ion-select [(ngModel)]="countDataBaby" disabled="{{disabledSelectBaby}}" formControlName="babys" (ionChange)="openForm($event, 'babys')">
+          <ion-option *ngFor="let numberOption of numberOptions" value="{{numberOption}}">{{numberOption}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Observaciones</ion-label>
+        <ion-textarea placeholder="Necesidades especiales" formControlName="observations"></ion-textarea>
+      </ion-item>
+      <ion-list *ngIf="editInfoAdults.length > 0">
+        <h3 class="title-detail-booking">PERSONAS ADULTAS</h3>
+        <ion-list>
+          <ion-item *ngFor="let item of editInfoAdults;let i = index;" (click)="presentActionSheet(item,i)">
+            {{ item.full_name }} <span class="principal-person" *ngIf="item.is_principal==true" >(Pasajero principal)</span>
+          </ion-item>
+        </ion-list>
+        <ion-label class="add-person" (click)="openForm(1, 'adults', true)">Agregar persona adulta</ion-label>
+      </ion-list>
+      <ion-list *ngIf="editInfoChildrens.length > 0">
+        <h3 class="title-detail-booking">PERSONAS J&Oacute;VENES</h3>
+        <ion-list>
+          <ion-item *ngFor="let item of editInfoChildrens;let i = index;" (click)="presentActionSheet(item,i)">
+            {{ item.full_name }}
+          </ion-item>
+        </ion-list>
+        <ion-label class="add-person" (click)="openForm(1, 'children', true)">Agregar j&oacute;venes</ion-label>
+      </ion-list>
+      <ion-list *ngIf="editInfoBabies.length > 0">
+        <h3 class="title-detail-booking">INFANTES</h3>
+        <ion-list>
+          <ion-item *ngFor="let item of editInfoBabies;let i = index;" (click)="presentActionSheet(item,i)">
+            {{ item.full_name }}
+          </ion-item>
+        </ion-list>
+        <ion-label class="add-person" (click)="openForm(1, 'babys', true)">Agregar infantes</ion-label>
+
+      </ion-list>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-12>
+            <button full ion-button type="submit" [disabled]="!book.valid">Reservar</button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+
+
+  </div>
+
+</ion-content>

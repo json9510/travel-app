@@ -1,0 +1,33 @@
+page-reservar {
+
+	ion-button {
+		width: 100%;
+	}
+	
+	ion-content, content {
+		background-color: #f5f5f0 !important;
+	}	
+	
+	.title-detail-booking{
+		font-size: 1em;
+		font-weight: 400;
+		color: rgba(0,0,0,.6);
+		margin-top: 35px !important;
+	}
+
+	.add-person{
+		float: right;
+		color: #37A1C8;
+		margin-top: 0px !important;
+    	margin-bottom: 0px !important;
+	}
+
+	.list-md {
+		margin: -1px 0 5px !important;
+	}
+
+	.principal-person{
+		font-size: 0.8em;
+		color: gray;
+	}
+}
