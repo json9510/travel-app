@@ -41,24 +41,22 @@ export class ReservasPage {
 	getBookings() {
 		this.storage.get("session").then((data) => {
 			this.showLoader();
-			let getUrl = this.backendProvider.apiServer + "/bookings/search.json";
-			let parameters = this.paramSerializer(this.paginator);
-			getUrl += "?user_id=" + data.id + "&" + parameters;
-			console.log(getUrl);
-
+			console.log(data.user)
+			let getUrl = this.backendProvider.apiServer + "/bookings-users/"+ data.user +"/";
 			this.loading.present().then(() => {
 				this.backendProvider.getData(getUrl).then(response => {
 					if (this.previousBookings.length > 0) {
 						this.emptyList = false;
-						this.bookings = this.previousBookings.concat(response['bookings']);
+						this.bookings = this.previousBookings.concat(response);
 					} else {
-						this.bookings = response['bookings'];
+						this.bookings = response;
 						this.emptyList = true;
 					}
 					this.loading.dismiss();
 				});
 			});
 		})
+		console.log(this.bookings)
 
 	}
 

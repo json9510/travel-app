@@ -73,6 +73,7 @@ export class LoginPage {
 		this.msg = "Verificando sesion..."
 		this.showLoader(this.msg);
 		this.storage.get('session').then((result) => {
+			console.log(result)
 			if (result) {
 				this.loading.dismiss();
 				this.redirect();

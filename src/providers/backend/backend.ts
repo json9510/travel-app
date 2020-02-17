@@ -11,7 +11,8 @@ import { ToastController } from 'ionic-angular';
 @Injectable()
 export class BackendProvider {
 
-  public apiServer: String = "http://192.168.1.15:1500/api";
+  public apiServer: String = "https://travelappweb.com/api";
+  public mediaServer: String = "https://travelappweb.com";
 
   //public apiServer: String = "http://18.217.214.181/travelapp-pruebas";
   //public apiServer: String = "http://192.168.1.5/TravelApp-Admin";
@@ -70,9 +71,9 @@ export class BackendProvider {
     });
   }
 
-  getPackageFavorite(info) {
+  getPackageFavorite(userId) {
     return new Promise((resolve, reject) => {
-      this.http.post(this.apiServer + '/users/get-favorites.json', JSON.stringify(info))
+      this.http.get(this.apiServer + '/packages-favorites-list/'+userId+'/')
         .timeout(9000)
         .subscribe(res => {
           resolve(res);
@@ -85,7 +86,10 @@ export class BackendProvider {
 
   addPackageFavorite(info) {
     return new Promise((resolve, reject) => {
-      this.http.post(this.apiServer + '/favorites/add-favorite.json', JSON.stringify(info))
+      let headers = new HttpHeaders({
+        'Content-Type': 'application/json'
+      });
+      this.http.post(this.apiServer + '/save-favorite/', info, {headers:headers})
         .subscribe(res => {
           resolve(res);
         }, (err) => {
@@ -95,9 +99,11 @@ export class BackendProvider {
   }
 
   removePackageFavorite(info) {
-    console.log(info)
     return new Promise((resolve, reject) => {
-      this.http.post(this.apiServer + '/favorites/del-favorite.json', JSON.stringify(info))
+      let headers = new HttpHeaders({
+        'Content-Type': 'application/json'
+      });
+      this.http.post(this.apiServer + '/remove-favorite/', info, {headers:headers})
         .subscribe(res => {
           resolve(res);
         }, (err) => {

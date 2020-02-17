@@ -1,81 +1,100 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      <ion-searchbar [(ngModel)]="keyword" placeholder="¿A dónde quieres ir?" [showCancelButton]="true"
-        [class.search-cancel]="showCancelButton" (ionCancel)="searchCancel($event)" (ionInput)="localSearch($event)">
-      </ion-searchbar>
+    <ion-navbar>
+        <ion-title>
+            <ion-searchbar [(ngModel)]="keyword" placeholder="¿A dónde quieres ir?" [showCancelButton]="true" [class.search-cancel]="showCancelButton" (ionCancel)="searchCancel($event)" (ionInput)="localSearch($event)">
+            </ion-searchbar>
 
-    </ion-title>
-    <ion-buttons end>
-      <button ion-button icon-start text-center (click)="globalSearch()">
-        <ion-icon name="search"></ion-icon>
-      </button>
-      <button ion-button icon-only (click)="openFilters()">
-        <ion-icon name="options" class="option_item"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-navbar>
+        </ion-title>
+        <ion-buttons end>
+            <button ion-button icon-start text-center (click)="globalSearch()">
+                <ion-icon name="search"></ion-icon>
+            </button>
+            <button ion-button icon-only (click)="openFilters()">
+                <ion-icon name="options" class="option_item"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
 
-  <ion-toolbar no-border-top>
-    <ion-segment [(ngModel)]="category">
-      <ion-segment-button value="featured">
-        Destacados
-      </ion-segment-button>
-      <ion-segment-button value="national">
-        Nacional
-      </ion-segment-button>
-      <ion-segment-button value="international">
-        Internacional
-      </ion-segment-button>
-    </ion-segment>
-  </ion-toolbar>
+    <ion-toolbar no-border-top>
+        <ion-segment [(ngModel)]="category">
+            <ion-segment-button value="national">
+                Nacional
+            </ion-segment-button>
+            <ion-segment-button value="international">
+                Internacional
+            </ion-segment-button>
+            <ion-segment-button value="cruiser">
+                Crucero
+            </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div [ngSwitch]="category" swipeSegment [tabsList]="categories" [(currentTab)]="category"
-    (tabChanged)="onTabChanged($event)" class="swipe-area">
+    <div [ngSwitch]="category" swipeSegment [tabsList]="categories" [(currentTab)]="category" (tabChanged)="onTabChanged($event)" class="swipe-area">
 
-    <ion-list *ngSwitchCase="'featured'">
-      <ion-refresher (ionRefresh)="doRefresh($event)">
-        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Arrastra para actualizar"
-          refreshingSpinner="circles" refreshingText="Actualizando...">
-        </ion-refresher-content>
-      </ion-refresher>
-      <button ion-item *ngFor="let package of packages" (click)="openDetallePaquetePage(package.id)">
-        <ion-thumbnail item-start>
-          <img *ngIf="package.photo_dir == null" src="../../assets/imgs/icon.png">
-          <img *ngIf="package.photo_dir != null" src="{{backendProvider.apiServer}}/{{package.photo_dir}}thumbnail-{{package.photo}}">
-        </ion-thumbnail>
-        <h2 class=tittle>{{package.tittle}}</h2>
-        <p>Desde: {{package.prices[0].double_price | currency:package.prices[0].currency.symbol}}</p>
-        <p class="stars">
-          <ion-icon name="star" [ngClass]="{ 'semi-transparent' : package.stars < 1 }"></ion-icon>
-          <ion-icon name="star" [ngClass]="{ 'semi-transparent' : package.stars < 2 }"></ion-icon>
-          <ion-icon name="star" [ngClass]="{ 'semi-transparent' : package.stars < 3 }"></ion-icon>
-          <ion-icon name="star" [ngClass]="{ 'semi-transparent' : package.stars < 4 }"></ion-icon>
-          <ion-icon name="star" [ngClass]="{ 'semi-transparent' : package.stars < 5 }"></ion-icon>
-        </p>
-        <label>{{package.company.name}}</label>
-      </button>
-      <ion-infinite-scroll *ngIf="next != 0" (ionInfinite)="doInfinite($event)">
-        <ion-infinite-scroll-content></ion-infinite-scroll-content>
-      </ion-infinite-scroll>
-    </ion-list>
+        <ion-list *ngSwitchCase="'national'">
+            <!-- <ion-refresher (ionRefresh)="doRefresh($event)">
+                <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Arrastra para actualizar" refreshingSpinner="circles" refreshingText="Actualizando...">
+                </ion-refresher-content>
+            </ion-refresher> -->
+            <button ion-item *ngFor="let package of nationalPackages" (click)="openDetallePaquetePage(package.pk)">
+                <ion-thumbnail item-start>
+                <img *ngIf="package.data.images == null" src="../../assets/imgs/icon.png">
+                <img *ngIf="package.data.images[0] != null" src="{{backendProvider.mediaServer}}/media/{{package.data.images[0].fields.file}}">
+                </ion-thumbnail>
+                <h2 class=tittle>{{package.tittle}}</h2>
+                <p>Desde: {{package.data.price | currency:package.data.symbol}}</p>
+                <p class="stars">
+                <ion-icon name="star" [ngClass]="{ 'semi-transparent' : package.data.stars < 1 }"></ion-icon>
+                <ion-icon name="star" [ngClass]="{ 'semi-transparent' : package.data.stars < 2 }"></ion-icon>
+                <ion-icon name="star" [ngClass]="{ 'semi-transparent' : package.data.stars < 3 }"></ion-icon>
+                <ion-icon name="star" [ngClass]="{ 'semi-transparent' : package.data.stars < 4 }"></ion-icon>
+                <ion-icon name="star" [ngClass]="{ 'semi-transparent' : package.data.stars < 5 }"></ion-icon>
+                </p>
+                <label>{{package.data.company}}</label>
+            </button>
+            <!-- <ion-infinite-scroll *ngIf="next != 0" (ionInfinite)="doInfinite($event)">
+                <ion-infinite-scroll-content></ion-infinite-scroll-content>
+            </ion-infinite-scroll> -->
+        </ion-list>
 
-    <ion-list *ngSwitchCase="'national'">
-      <ion-card *ngFor="let category of nationalPackages" (click)="getChildCategories(category.id)">
-        <img src="{{backendProvider.apiServer}}/{{category.photo_dir}}{{category.photo}}">
-        <div class="card-title">{{category.name}}</div>
-        <div class="card-subtitle">{{category.description}}</div>
-      </ion-card>
-    </ion-list>
+        <ion-list *ngSwitchCase="'international'">
+            <button ion-item *ngFor="let package of internationalPackages" (click)="openDetallePaquetePage(package.pk)">
+                <ion-thumbnail item-start>
+                <img *ngIf="package.data.images == null" src="../../assets/imgs/icon.png">
+                <img *ngIf="package.data.images[0] != null" src="{{backendProvider.mediaServer}}/media/{{package.data.images[0].fields.file}}">
+                </ion-thumbnail>
+                <h2 class=tittle>{{package.tittle}}</h2>
+                <p>Desde: {{package.data.price | currency:package.data.symbol}}</p>
+                <p class="stars">
+                <ion-icon name="star" [ngClass]="{ 'semi-transparent' : package.data.stars < 1 }"></ion-icon>
+                <ion-icon name="star" [ngClass]="{ 'semi-transparent' : package.data.stars < 2 }"></ion-icon>
+                <ion-icon name="star" [ngClass]="{ 'semi-transparent' : package.data.stars < 3 }"></ion-icon>
+                <ion-icon name="star" [ngClass]="{ 'semi-transparent' : package.data.stars < 4 }"></ion-icon>
+                <ion-icon name="star" [ngClass]="{ 'semi-transparent' : package.data.stars < 5 }"></ion-icon>
+                </p>
+                <label>{{package.data.company}}</label>
+            </button>
+        </ion-list>
 
-    <ion-list *ngSwitchCase="'international'">
-      <ion-card *ngFor="let category of internationalPackages" (click)="getChildCategories(category.id)">
-        <img src="{{backendProvider.apiServer}}/{{category.photo_dir}}{{category.photo}}">
-        <div class="card-title">{{category.name}}</div>
-        <div class="card-subtitle">{{category.description}}</div>
-      </ion-card>
-    </ion-list>
-  </div>
+        <ion-list *ngSwitchCase="'cruiser'">
+            <button ion-item *ngFor="let package of cruiserPackages" (click)="openDetallePaquetePage(package.pk)">
+                <ion-thumbnail item-start>
+                <img *ngIf="package.data.images == null" src="../../assets/imgs/icon.png">
+                <img *ngIf="package.data.images[0] != null" src="{{backendProvider.mediaServer}}/media/{{package.data.images[0].fields.file}}">
+                </ion-thumbnail>
+                <h2 class=tittle>{{package.tittle}}</h2>
+                <p>Desde: {{package.data.price | currency:package.data.symbol}}</p>
+                <p class="stars">
+                <ion-icon name="star" [ngClass]="{ 'semi-transparent' : package.data.stars < 1 }"></ion-icon>
+                <ion-icon name="star" [ngClass]="{ 'semi-transparent' : package.data.stars < 2 }"></ion-icon>
+                <ion-icon name="star" [ngClass]="{ 'semi-transparent' : package.data.stars < 3 }"></ion-icon>
+                <ion-icon name="star" [ngClass]="{ 'semi-transparent' : package.data.stars < 4 }"></ion-icon>
+                <ion-icon name="star" [ngClass]="{ 'semi-transparent' : package.data.stars < 5 }"></ion-icon>
+                </p>
+                <label>{{package.data.company}}</label>
+            </button>
+        </ion-list>
+    </div>
 </ion-content>

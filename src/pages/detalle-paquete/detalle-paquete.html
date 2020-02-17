@@ -6,281 +6,271 @@
 -->
 <ion-header class="background-gradient">
 
-  <ion-navbar hide-tabs>
-    <div float-left>
-      <ion-title>Detalle</ion-title>
-    </div>
+    <ion-navbar hide-tabs>
+        <div float-left>
+            <ion-title>Detalle</ion-title>
+        </div>
 
-    <div float-right>
-      <img *ngIf="pdf==true" style="width: 30px;margin-right: 20px;" src="../../assets/imgs/pdf.png" (click)="viewPdf()">
-      <ion-icon class="favorito" [ngClass]="{'yellow':favorite}" (click)="changeFavoriteState()" name="heart"></ion-icon>
-    </div>
-  </ion-navbar>
+        <div float-right>
+            <img *ngIf="pdf==true" style="width: 30px;margin-right: 20px;" src="../../assets/imgs/pdf.png" (click)="viewPdf()">
+            <ion-icon class="favorito" [ngClass]="{'yellow':favorite}" (click)="changeFavoriteState()" name="heart"></ion-icon>
+        </div>
+    </ion-navbar>
 
 </ion-header>
 
 
 <ion-content>
-  <div *ngIf="package?.video!='' " [ngClass]="{'novisible':!mostrar}">
+    <!-- <div *ngIf="package?.data.video!='' " [ngClass]="{'novisible':!mostrar}">
     <div class="video-container">
       <iframe [src]="url">
       </iframe>
     </div>
-  </div>
-  <ion-slides [autoplay]="2000" [centeredSlides]="true" [effect]="fade" [loop]="true" [pager]="true" style="height:250px;">
-    <ion-slide>
-      <img src="{{backendProvider.apiServer}}/{{package?.photo_dir}}{{package?.photo}}">
-    </ion-slide>
-    <ion-slide>
-      <img src="../../assets/imgs/alianza.png">
-    </ion-slide>
-    <ion-slide>
-      <img src="{{backendProvider.apiServer}}/{{package?.company.logo_dir}}thumbnail-{{package?.company.logo}}">
-    </ion-slide>
-  </ion-slides>
+  </div> -->
+    <ion-slides [autoplay]="2000" [centeredSlides]="true" [effect]="fade" [loop]="true" [pager]="true" style="height:250px;">
+        <ion-slide>
+            <img src="{{backendProvider.mediaServer}}/media/{{package?.data.images[0].fields.file}}">
+        </ion-slide>
+    </ion-slides>
+    <ion-item text-center class="background-gradient">
+        <!--<div>{{package?.data.hotel}}</div>-->
+        <p style="color: #fff;">{{package?.data.tittle}}</p>
+        <!-- <ion-icon name="star" class="stars" [ngClass]="{ 'semi-transparent' : package?.data.stars < 1 }"></ion-icon>
+        <ion-icon name="star" class="stars" [ngClass]="{ 'semi-transparent' : package?.data.stars < 2 }"></ion-icon>
+        <ion-icon name="star" class="stars" [ngClass]="{ 'semi-transparent' : package?.data.stars < 3 }"></ion-icon>
+        <ion-icon name="star" class="stars" [ngClass]="{ 'semi-transparent' : package?.data.stars < 4 }"></ion-icon>
+        <ion-icon name="star" class="stars" [ngClass]="{ 'semi-transparent' : package?.data.stars < 5 }"></ion-icon> -->
+        <div *ngIf="package?.data.company!=undefined">{{package?.data.company}}</div>
+    </ion-item>
 
-  <ion-item text-center class="background-gradient">
-    <!--<div>{{package?.hotel}}</div>-->
-    <p style="color: #fff;">{{package?.tittle}}</p>
-    <ion-icon name="star" class="stars" [ngClass]="{ 'semi-transparent' : package?.stars < 1 }"></ion-icon>
-    <ion-icon name="star" class="stars" [ngClass]="{ 'semi-transparent' : package?.stars < 2 }"></ion-icon>
-    <ion-icon name="star" class="stars" [ngClass]="{ 'semi-transparent' : package?.stars < 3 }"></ion-icon>
-    <ion-icon name="star" class="stars" [ngClass]="{ 'semi-transparent' : package?.stars < 4 }"></ion-icon>
-    <ion-icon name="star" class="stars" [ngClass]="{ 'semi-transparent' : package?.stars < 5 }"></ion-icon>
-    <div *ngIf="package?.company!=undefined">{{package?.company?.name}} - {{package?.company?.association}}</div>
-  </ion-item>
-
-  <div class="icons-row" text-center>
-    <ion-icon name="plane" (click)="showToast('Tiquetes')" [ngClass]="{'gray':!iconosDetalle.isTiquetes}"></ion-icon>
-    <ion-icon name="car" (click)="showToast('Traslados')" [ngClass]="{'gray':!iconosDetalle.isTraslados}"></ion-icon>
-    <ion-icon name="home" (click)="showToast('Hotel')" [ngClass]="{'gray':!iconosDetalle.isHotel}"></ion-icon>
-    <ion-icon name="restaurant" (click)="showToast('Alimentacion')" [ngClass]="{'gray':package?.food==''}"></ion-icon>
-    <ion-icon name="camera" (click)="showToast('Tours')" [ngClass]="{'gray':!iconosDetalle.isTours}"></ion-icon>
-    <ion-icon name="logo-usd" (click)="showToast('Impuestos')" [ngClass]="{'gray':!iconosDetalle.isImpuestos}"></ion-icon>
-    <ion-icon name="medkit" (click)="showToast('Asistencia médica')" [ngClass]="{'gray':!iconosDetalle.isAsistencia}"></ion-icon>
-    <ion-icon name="musical-notes" (click)="showToast('Shows y recreación')" [ngClass]="{'gray':!iconosDetalle.isShows}"></ion-icon>
-  </div>
-
-  <div text-center>
-    <h4>{{package?.nights + 1}} días - {{package?.nights}} noches</h4>
-  </div>
-
-  <div class="card">
-    <div text-center>
-      <h4 class="table-title">Incluye</h4>
+    <div class="icons-row" text-center>
+        <ion-icon name="plane" (click)="showToast('Tiquetes')" [ngClass]="{'gray':!iconosDetalle.isTiquetes}"></ion-icon>
+        <ion-icon name="car" (click)="showToast('Traslados')" [ngClass]="{'gray':!iconosDetalle.isTraslados}"></ion-icon>
+        <ion-icon name="home" (click)="showToast('Hotel')" [ngClass]="{'gray':!iconosDetalle.isHotel}"></ion-icon>
+        <ion-icon name="restaurant" (click)="showToast('Alimentacion')" [ngClass]="{'gray':package?.data.food==''}"></ion-icon>
+        <ion-icon name="camera" (click)="showToast('Tours')" [ngClass]="{'gray':!iconosDetalle.isTours}"></ion-icon>
+        <ion-icon name="logo-usd" (click)="showToast('Impuestos')" [ngClass]="{'gray':!iconosDetalle.isImpuestos}"></ion-icon>
+        <ion-icon name="medkit" (click)="showToast('Asistencia médica')" [ngClass]="{'gray':!iconosDetalle.isAsistencia}"></ion-icon>
+        <ion-icon name="musical-notes" (click)="showToast('Shows y recreación')" [ngClass]="{'gray':!iconosDetalle.isShows}"></ion-icon>
     </div>
-    <ion-list>
-      <button ion-item *ngFor="let item of package?.features" class="text-feature">
-        {{item.feature}}
+
+    <div text-center>
+        <h4>{{package?.nights + 1}} días - {{package?.nights}} noches</h4>
+    </div>
+
+    <div class="card">
+        <div text-center>
+            <h4 class="table-title">Incluye</h4>
+        </div>
+        <ion-list>
+            <button ion-item *ngFor="let item of package?.data.features" class="text-feature">
+          {{item.feature}}
       </button>
-    </ion-list>
-  </div>
-
-  <div class="card" *ngIf="package?.exclusions.length > 0">
-    <div text-center>
-      <h4 class="table-title">No Incluye</h4>
+        </ion-list>
     </div>
-    <ion-list>
-      <button ion-item *ngFor="let item of package?.exclusions" class="text-feature">
+
+    <div class="card" *ngIf="package?.data.exclusions.length > 0">
+        <div text-center>
+            <h4 class="table-title">No Incluye</h4>
+        </div>
+        <ion-list>
+            <button ion-item *ngFor="let item of package?.data.exclusions" class="text-feature">
         {{item.exclusion}}
       </button>
-    </ion-list>
-  </div>
-
-  <div class="card">
-    <div>
-      <h4 class="table-title" text-center>Acomodación</h4>
-      <ion-item>
-        <ion-label>Hotel</ion-label>
-        <ion-select [(ngModel)]="firstHotel">
-          <ion-option *ngFor="let price of package?.prices; let i = index" (ionSelect)="setPrice(price, i)" value="{{price.id}}">{{price.hotel ? price.hotel : 'opción '+i}}</ion-option>
-        </ion-select>
-      </ion-item>
-      <div class="acomodacion_check lista_radio_button" radio-group [(ngModel)]="price">
-        <p *ngIf="package?.prices[pricePosition].single_price!=null && package?.prices[pricePosition].single_price>0">
-          <label class="icono_single icono_list"></label>
-          <ion-label (click)="setCheck('single_price_'+package?.prices[pricePosition].single_price,'SGL HABITACION PARA UNA PERSONA SOLA',package?.prices[pricePosition].currency)">SENCILLA</ion-label>
-        </p>
-        <p *ngIf="package?.prices[pricePosition].double_price!=null && package?.prices[pricePosition].double_price>0" (click)="setCheck('double_price_'+package?.prices[pricePosition].double_price,'DBL  HABITACION PARA 2 PERSONAS',package?.prices[pricePosition].currency)">
-          <label class="icono_doble  icono_list"></label>
-          <ion-label>DOBLE</ion-label>
-        </p>
-        <p *ngIf="package?.prices[pricePosition].triple_price!=null && package?.prices[pricePosition].triple_price>0" (click)="setCheck('triple_price_'+package?.prices[pricePosition].triple_price,'TPL  HABITACION PARA 3 PERSONAS',package?.prices[pricePosition].currency)">
-          <label class="icono_triple icono_list"></label>
-          <ion-label>TRIPLE</ion-label>
-        </p>
-        <p *ngIf="package?.prices[pricePosition].quadruple_price!=null && package?.prices[pricePosition].quadruple_price>0" (click)="setCheck('quadruple_price_'+package?.prices[pricePosition].quadruple_price,'CDP HABITACION PARA 4 PERSONAS',package?.prices[pricePosition].currency)">
-          <label class="icono_cuatruple icono_list"></label>
-          <ion-label>CUADRUPLE</ion-label>
-        </p>
-        <p *ngIf="package?.prices[pricePosition].kid_price!=null && package?.prices[pricePosition].kid_price>0" (click)="setCheck('kid_price_'+package?.prices[pricePosition].kid_price,'CHD VALOR DEL NIÑO (MENOR DE 2 A 11 AÑOS)',package?.prices[pricePosition].currency)">
-          <label class="icono_nino icono_list"></label>
-          <ion-label>NIÑO </ion-label>
-        </p>
-      </div>
+        </ion-list>
     </div>
 
-    <!-- <div class="precio" *ngIf="package?.prices[pricePosition].currency!=undefined" text-center>
-      <label>Precio</label>
-      <span>{{setPrecio(price) | currency:package?.prices[pricePosition].currency.symbol}} </span>
-    </div> -->
-    <div *ngIf="finalPrice" text-center class="price">
-      <span>PRECIO: </span>
-      <span>
-        {{finalPrice}}
-      </span>
-    </div>
-  </div>
-
-  <div class="card">
-    <div text-center>
-      <h4 class="table-title">Alimentación</h4>
-      <p style="color:#3DA19F;">PLAN: {{package?.prices[pricePosition].food}}</p>
-      <p (click)="foodDetails(package?.prices[pricePosition].food)">
-        <ion-label *ngIf="package?.prices[pricePosition].food == 'PC'">
-          <img class="plan-food" src="../../assets/imgs/Desayuno-18.png">
-        </ion-label>
-        <ion-label *ngIf="package?.prices[pricePosition].food == 'PAM'">
-          <img class="plan-food" src="../../assets/imgs/Desayuno-18.png">
-          <img class="plan-food" src="../../assets/imgs/Cena-18.png">
-        </ion-label>
-        <ion-label *ngIf="package?.prices[pricePosition].food == 'PA'">
-          <img class="plan-food" src="../../assets/imgs/Desayuno-18.png">
-          <img class="plan-food" src="../../assets/imgs/Almuerzo-18.png">
-          <img class="plan-food" src="../../assets/imgs/Cena-18.png">
-        </ion-label>
-        <ion-label *ngIf="package?.prices[pricePosition].food == 'PAE'">
-          <img class="plan-food" src="../../assets/imgs/Desayuno-18.png">
-          <img class="plan-food" src="../../assets/imgs/Almuerzo-18.png">
-          <img class="plan-food" src="../../assets/imgs/Cena-18.png">
-          <img class="plan-food" src="../../assets/imgs/Snack-18.png">
-          <img class="plan-food" src="../../assets/imgs/Bar-2-18.png">
-        </ion-label>
-        <ion-label *ngIf="package?.prices[pricePosition].food == 'FULL'">
-          <img class="plan-food" src="../../assets/imgs/Desayuno-18.png">
-          <img class="plan-food" src="../../assets/imgs/Almuerzo-18.png">
-          <img class="plan-food" src="../../assets/imgs/Cena-18.png">
-          <img class="plan-food" src="../../assets/imgs/Snack-18.png">
-          <img class="plan-food" src="../../assets/imgs/Bar-18.png">
-        </ion-label>
-      </p>
-    </div>
-    <div text-center>
-      <h4>Observaciones Alimentación:</h4>
-      <p>{{package?.prices[pricePosition].food_observations ? package?.prices[pricePosition].food_observations : 'Sin Observaciones'
-        }}
-      </p>
-    </div>
-  </div>
-
-  <div class="card" text-center>
-    <h4 class="table-title">Disponibilidades</h4>
-    <ion-row *ngFor="let availability of package?.availabilities">
-      <ion-col col-12 justify-content-center *ngIf="!package?.availabilities?.length > 0">
-        <p>Sin disponibilidades cargadas</p>
-      </ion-col>
-      <ion-col col-12 *ngIf="package?.availabilities?.length > 0">
-        <ion-row justify-content-center>
-          <ion-col class="table-subtitle" col-4>
-            <h5>Salida:</h5>
-          </ion-col>
-          <ion-col class="table-subtitle" col-4>
-            <h5>Llegada:</h5>
-          </ion-col>
-          <ion-col class="table-subtitle" col-4>
-            <h5>Cupos:</h5>
-          </ion-col>
-        </ion-row>
-        <ion-row justify-content-center>
-          <ion-col col-4>
-            <p>{{availability.start_date | moment : 'YYYY-MM-DD'}}</p>
-          </ion-col>
-          <ion-col col-4>
-            <p>{{availability.end_date | moment : 'YYYY-MM-DD'}}</p>
-          </ion-col>
-          <ion-col col-4>
-            <div>
-              <p class="sold" *ngIf="availability.available == false">No disponible</p>
-              <p class="sold" *ngIf="availability.temporary_seats < 1">VENDIDO</p>
-              <p *ngIf="availability.temporary_seats > 0 && availability.available == true">{{availability.temporary_seats}}</p>
+    <div class="card">
+        <div>
+            <h4 class="table-title" text-center>Acomodación</h4>
+            <ion-item>
+                <ion-label>Hotel</ion-label>
+                <ion-select [(ngModel)]="firstHotel">
+                    <ion-option *ngFor="let price of package?.data.prices; let i = index" (ionSelect)="setPrice(price, i)" value="{{price.pk}}">{{price.hotel ? price.hotel : 'opción '+i}}</ion-option>
+                </ion-select>
+            </ion-item>
+            <div class="acomodacion_check lista_radio_button" radio-group [(ngModel)]="price">
+                <p *ngIf="package?.data.prices[pricePosition].single_price" (click)="setCheck('single_price_'+package?.data.prices[pricePosition].single_price,'SGL HABITACION PARA UNA PERSONA SOLA',package?.data.prices[pricePosition].currency)">
+                    <label class="icono_single icono_list"></label>
+                    <ion-label>SENCILLA</ion-label>
+                </p>
+                <p *ngIf="package?.data.prices[pricePosition].double_price" (click)="setCheck('double_price_'+package?.data.prices[pricePosition].double_price,'DBL  HABITACION PARA 2 PERSONAS',package?.data.prices[pricePosition].currency)">
+                    <label class="icono_doble  icono_list"></label>
+                    <ion-label>DOBLE</ion-label>
+                </p>
+                <p *ngIf="package?.data.prices[pricePosition].triple_price" (click)="setCheck('triple_price_'+package?.data.prices[pricePosition].triple_price,'TPL  HABITACION PARA 3 PERSONAS',package?.data.prices[pricePosition].currency)">
+                    <label class="icono_triple icono_list"></label>
+                    <ion-label>TRIPLE</ion-label>
+                </p>
+                <p *ngIf="package?.data.prices[pricePosition].quadruple_price" (click)="setCheck('quadruple_price_'+package?.data.prices[pricePosition].quadruple_price,'CDP HABITACION PARA 4 PERSONAS',package?.data.prices[pricePosition].currency)">
+                    <label class="icono_cuatruple icono_list"></label>
+                    <ion-label>CUADRUPLE</ion-label>
+                </p>
+                <p *ngIf="package?.data.prices[pricePosition].kid_price" (click)="setCheck('kid_price_'+package?.data.prices[pricePosition].kid_price,'CHD VALOR DEL NIÑO (MENOR DE 2 A 11 AÑOS)',package?.data.prices[pricePosition].currency)">
+                    <label class="icono_nino icono_list"></label>
+                    <ion-label>NIÑO </ion-label>
+                </p>
             </div>
-          </ion-col>
-        </ion-row>
-      </ion-col>
-    </ion-row>
-  </div>
+        </div>
 
-  <div class="card" text-center>
-    <h4 class="table-title">Vuelos</h4>
-    <ion-item *ngIf="package?.availabilities.length > 1">
-      <ion-label>Disponibilidad</ion-label>
-      <ion-select>
-        <ion-option *ngFor="let availability of package?.availabilities; let i = index" (ionSelect)="setAvailability(availability, i)"
-          value="{{availability.id}}">{{availability.start_date | moment : 'YYYY-MM-DD'}} a {{availability.end_date | moment : 'YYYY-MM-DD'}}</ion-option>
-      </ion-select>
-    </ion-item>
-    <ion-row *ngFor="let flight of package?.availabilities[availabilityPosition].flights" class="flights">
-      <ion-col col-12 *ngIf="!package?.availabilities[availabilityPosition].flights?.length > 0">
-        <h6>Sin vuelos cargados</h6>
-      </ion-col>
-      <ion-col col-12 *ngIf="package?.availabilities[availabilityPosition].flights?.length > 0">
-        <h6 class="flight-number">Vuelo N&uacute;mero: {{flight.number}}</h6>
-        <ion-row justify-content-center align-items-center class="flyght" style="height: 90px;">
-          <ion-col col-6>
-            <h6 class="flight-number">Aerolínea</h6>
-            <p>{{flight.airline.name}}</p>
-          </ion-col>
-          <ion-col col-6>
-            <figure>
-              <img src="{{backendProvider.apiServer}}/{{flight.airline.photo_dir}}thumbnail-{{flight.airline.photo}}">
-            </figure>
-          </ion-col>
+        <!-- <div class="precio" *ngIf="price" text-center>
+            <label>Precio</label>
+            <span>{{setPrice(price) }} </span>
+        </div> -->
+        <div *ngIf="finalPrice" text-center class="price">
+            <span>PRECIO: </span>
+            <span>
+              {{finalPrice}}
+            </span>
+        </div>
+    </div>
+
+    <div class="card">
+        <div text-center>
+            <h4 class="table-title">Alimentación</h4>
+            <p style="color:#3DA19F;">PLAN: {{package?.data.prices[pricePosition].food}}</p>
+            <p (click)="foodDetails(package?.data.prices[pricePosition].food)">
+                <ion-label *ngIf="package?.data.prices[pricePosition].food == 'PC'">
+                    <img class="plan-food" src="../../assets/imgs/Desayuno-18.png">
+                </ion-label>
+                <ion-label *ngIf="package?.data.prices[pricePosition].food == 'PAM'">
+                    <img class="plan-food" src="../../assets/imgs/Desayuno-18.png">
+                    <img class="plan-food" src="../../assets/imgs/Cena-18.png">
+                </ion-label>
+                <ion-label *ngIf="package?.data.prices[pricePosition].food == 'PA'">
+                    <img class="plan-food" src="../../assets/imgs/Desayuno-18.png">
+                    <img class="plan-food" src="../../assets/imgs/Almuerzo-18.png">
+                    <img class="plan-food" src="../../assets/imgs/Cena-18.png">
+                </ion-label>
+                <ion-label *ngIf="package?.data.prices[pricePosition].food == 'PAE'">
+                    <img class="plan-food" src="../../assets/imgs/Desayuno-18.png">
+                    <img class="plan-food" src="../../assets/imgs/Almuerzo-18.png">
+                    <img class="plan-food" src="../../assets/imgs/Cena-18.png">
+                    <img class="plan-food" src="../../assets/imgs/Snack-18.png">
+                    <img class="plan-food" src="../../assets/imgs/Bar-2-18.png">
+                </ion-label>
+                <ion-label *ngIf="package?.data.prices[pricePosition].food == 'FULL'">
+                    <img class="plan-food" src="../../assets/imgs/Desayuno-18.png">
+                    <img class="plan-food" src="../../assets/imgs/Almuerzo-18.png">
+                    <img class="plan-food" src="../../assets/imgs/Cena-18.png">
+                    <img class="plan-food" src="../../assets/imgs/Snack-18.png">
+                    <img class="plan-food" src="../../assets/imgs/Bar-18.png">
+                </ion-label>
+            </p>
+        </div>
+        <div text-center>
+            <h4>Observaciones Alimentación:</h4>
+            <p>{{package?.data.prices[pricePosition].food_observations ? package?.data.prices[pricePosition].food_observations : 'Sin Observaciones' }}
+            </p>
+        </div>
+    </div>
+
+    <div class="card" text-center>
+        <h4 class="table-title">Disponibilidades</h4>
+        <ion-row *ngFor="let availability of package?.data.availability">
+            <ion-col col-12 justify-content-center *ngIf="!package?.data.availability?.length > 0">
+                <p>Sin disponibilidades cargadas</p>
+            </ion-col>
+            <ion-col col-12 *ngIf="package?.data.availability?.length > 0">
+                <ion-row justify-content-center>
+                    <ion-col class="table-subtitle" col-4>
+                        <h5>Salida:</h5>
+                    </ion-col>
+                    <ion-col class="table-subtitle" col-4>
+                        <h5>Llegada:</h5>
+                    </ion-col>
+                    <ion-col class="table-subtitle" col-4>
+                        <h5>Cupos:</h5>
+                    </ion-col>
+                </ion-row>
+                <ion-row justify-content-center>
+                    <ion-col col-4>
+                        <p>{{availability.start_date | moment : 'YYYY-MM-DD'}}</p>
+                    </ion-col>
+                    <ion-col col-4>
+                        <p>{{availability.end_date | moment : 'YYYY-MM-DD'}}</p>
+                    </ion-col>
+                    <ion-col col-4>
+                        <div>
+                            <p class="sold" *ngIf="availability.temporary_seats < 1">VENDIDO</p>
+                            <p *ngIf="availability.temporary_seats > 0">{{availability.temporary_seats}}</p>
+                        </div>
+                    </ion-col>
+                </ion-row>
+            </ion-col>
         </ion-row>
-        <ion-row justify-content-center class="flyght" style="line-height:4;">
-          <ion-col col-6>
-            <h6 class="flight-number">Maletas</h6>
-            <h6 class="flight-number">
-              <ion-icon name="briefcase"></ion-icon>{{' ' + package?.baggage}}</h6>
-          </ion-col>
-          <ion-col col-6>
-            <h6 class="flight-number">Peso</h6>
-            <h6 class="flight-number">{{package?.baggage_weight + ' KG'}}</h6>
-          </ion-col>
+    </div>
+
+    <div class="card" text-center>
+        <h4 class="table-title">Vuelos</h4>
+        <ion-item *ngIf="package?.data.availability.length > 1">
+            <ion-label>Disponibilidad</ion-label>
+            <ion-select>
+                <ion-option *ngFor="let availability of package?.data.availability; let i = index" (ionSelect)="setAvailability(availability, i)" value="{{availability.pk}}">{{availability.start_date | moment : 'YYYY-MM-DD'}} a {{availability.end_date | moment : 'YYYY-MM-DD'}}</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-row *ngFor="let flight of package?.data.availability[availabilityPosition].flights" class="flights">
+            <ion-col col-12 *ngIf="!package?.data.availability[availabilityPosition].flights?.length > 0">
+                <h6>Sin vuelos cargados</h6>
+            </ion-col>
+            <ion-col col-12 *ngIf="package?.data.availability[availabilityPosition].flights?.length > 0">
+                <h6 class="flight-number">Vuelo N&uacute;mero: {{flight.number}}</h6>
+                <ion-row justify-content-center align-items-center class="flyght" style="height: 90px;">
+                    <ion-col col-6>
+                        <h6 class="flight-number">Aerolínea</h6>
+                        <p>{{flight.airline_name}}</p>
+                    </ion-col>
+                    <ion-col col-6>
+                        <figure>
+                            <!-- <img src="{{backendProvider.apiServer}}/{{flight.airline.photo_dir}}thumbnail-{{flight.airline.photo}}"> -->
+                        </figure>
+                    </ion-col>
+                </ion-row>
+                <ion-row justify-content-center class="flyght" style="line-height:4;">
+                    <ion-col col-6>
+                        <h6 class="flight-number">Maletas</h6>
+                        <h6 class="flight-number">
+                            <ion-icon name="briefcase"></ion-icon>{{' ' + package?.hand_baggage}}</h6>
+                    </ion-col>
+                    <ion-col col-6>
+                        <h6 class="flight-number">Peso</h6>
+                        <h6 class="flight-number">{{package?.hand_baggage_weight + ' KG'}}</h6>
+                    </ion-col>
+                </ion-row>
+                <ion-row justify-content-center class="flyght">
+                    <ion-col col-6>
+                        <h6 class="flight-number">
+                            HORA SALIDA: {{flight.departure_time}}
+                        </h6>
+                        <h6 class="flight-number">
+                            {{flight.departure_city}}
+                        </h6>
+                        <h2>
+                            <ion-icon name="ios-plane" [ngClass]="{'plane-coming':flight.direction == 'ida'}"></ion-icon>
+                            {{flight.direction == 'ida' ? 'ida' : flight.direction == 'regreso' ? 'regreso' : ''}}
+                        </h2>
+                    </ion-col>
+                    <ion-col col-6>
+                        <h6 class="flight-number">
+                            HORA LLEGADA: {{flight.arrival_time}}
+                        </h6>
+                        <h6 class="flight-number">
+                            {{flight.destination_city}}
+                        </h6>
+                        <h2>
+                            <ion-icon name="ios-plane" [ngClass]="{'plane-coming':flight.direction == 'regreso'}"></ion-icon>
+                            {{flight.direction == 'ida' ? 'ida' : flight.direction == 'regreso' ? 'regreso' : ''}}
+                        </h2>
+                    </ion-col>
+                </ion-row>
+            </ion-col>
         </ion-row>
-        <ion-row justify-content-center class="flyght">
-          <ion-col col-6>
-            <h6 class="flight-number">
-              HORA SALIDA: {{flight.departure_time | moment : 'HH:mm'}}
-            </h6>
-            <h6 class="flight-number">
-              {{flight.departure_city}}
-            </h6>
-            <h2>
-              <ion-icon name="ios-plane" [ngClass]="{'plane-coming':flight.direction == 'coming back'}"></ion-icon>
-              {{flight.direction == 'going out' ? 'ida' : flight.direction == 'coming back' ? 'regreso' : ''}}
-            </h2>
-          </ion-col>
-          <ion-col col-6>
-            <h6 class="flight-number">
-              HORA LLEGADA: {{flight.arrival_time | moment : 'HH:mm'}}
-            </h6>
-            <h6 class="flight-number">
-              {{flight.destination_city}}
-            </h6>
-            <h2>
-              <ion-icon name="ios-plane" [ngClass]="{'plane-coming':flight.direction == 'coming back'}"></ion-icon>
-              {{flight.direction == 'going out' ? 'ida' : flight.direction == 'coming back' ? 'regreso' : ''}}
-            </h2>
-          </ion-col>
-        </ion-row>
-      </ion-col>
-    </ion-row>
-  </div>
+    </div>
 
 </ion-content>
 
 <div class="footer-button">
-  <div class="btn-container">
-    <a (click)="openReservarPage()" class="btn">Reservar</a>
-  </div>
+    <div class="btn-container">
+        <a (click)="openReservarPage()" class="btn">Reservar</a>
+    </div>
 </div>

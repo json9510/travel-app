@@ -35,7 +35,7 @@ export class RegistroPage {
 
 		this.userData = this.formBuilder.group({
 			company_id: ['', Validators.required],
-			worker_type: [''],
+			//worker_type: [''],
 			observations:[''],
 			first_name: ['', Validators.required],
 			last_name: ['', Validators.required],
@@ -44,7 +44,7 @@ export class RegistroPage {
 				Validators.email
 			])],
 			password: ['', Validators.required],
-			repassword: ['', Validators.required],
+			confirm_password: ['', Validators.required],
 		});
 
 	}
@@ -54,13 +54,13 @@ export class RegistroPage {
 	}
 
 	register() {
-		this.showLoader("Cargando...");
-		let postUrl = this.backendProvider.apiServer + "/users/register.json";
+		//this.showLoader("Cargando...");
+		let postUrl = this.backendProvider.apiServer + "/user-registration/";
 		let result: any;
 
 		this.backendProvider.postData(this.userData.value, postUrl).then(response => {
-			result = response['user'];
-			if (result.saved) {
+			result = response['token'];
+			if (result) {
 				this.message = 'El registro ha sido exitoso. Por favor ingresa con tus nuevas credenciales.';
 				this.presentAlert();
 				this.navCtrl.push(LoginPage, {}, { animate: false });
@@ -83,16 +83,9 @@ export class RegistroPage {
 	getCompanies() {
 
 		this.showLoader("Cargando...");
-		let getUrl = this.backendProvider.apiServer + "/companies/registerSelect.json";
+		let getUrl = this.backendProvider.apiServer + "/companies-list/";
 		this.backendProvider.getData(getUrl).then(response => {
-			this.companies = response['companies'];
-
-			let element = {
-				"id": "other",
-				"name": "Otra"
-			}
-			this.companies.push(element);
-
+			this.companies = response;
 			console.log(this.companies)
 			this.loading.dismiss();
 		});

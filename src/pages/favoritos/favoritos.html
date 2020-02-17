@@ -1,38 +1,38 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Favoritos
-    </ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>
+            Favoritos
+        </ion-title>
+    </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <div *ngIf="emptyList" class="empty-list">
-    <div>
-      <p>¡HOLA!</p>
+    <div *ngIf="emptyList" class="empty-list">
+        <div>
+            <p>¡HOLA!</p>
+        </div>
+        <div>
+            <p>Haz tu lista de favoritos y encuéntralos rápidamente aquí.</p>
+        </div>
+        <div>
+            <ion-icon style="color: #ec644b;" name="{{isHeart}}"></ion-icon>
+        </div>
     </div>
-    <div>
-      <p>Haz tu lista de favoritos y encuéntralos rápidamente aquí.</p>
-    </div>
-    <div>
-      <ion-icon style="color: #ec644b;" name="{{isHeart}}"></ion-icon>
-    </div>
-  </div>
-  <ion-list>
-    <button ion-item *ngFor="let package of packages" (click)="openDetallePaquetePage(package.id)">
+    <ion-list>
+        <button ion-item *ngFor="let package of packages" (click)="openDetallePaquetePage(package.package)">
       <ion-thumbnail item-start>
-        <img src="{{backendProvider.apiServer}}/{{package.photo_dir}}thumbnail-{{package.photo}}">
+        <img src="{{backendProvider.mediaServer}}/media/{{package?.data.images[0].fields.file}}">
       </ion-thumbnail>
-      <h2 class=tittle>{{package.tittle}}</h2>
-      <p>Desde: {{package.prices[0].double_price}}</p>
+      <h2 class=tittle>{{package.data.title}}</h2>
+      <p>Desde: {{package.data.price}}</p>
       <p class="stars">
-        <label>{{package.company.name}}</label>
-        <ion-icon name="star" [ngClass]="{ 'semi-transparent' : package.stars < 1 }"></ion-icon>
-        <ion-icon name="star" [ngClass]="{ 'semi-transparent' : package.stars < 2 }"></ion-icon>
-        <ion-icon name="star" [ngClass]="{ 'semi-transparent' : package.stars < 3 }"></ion-icon>
-        <ion-icon name="star" [ngClass]="{ 'semi-transparent' : package.stars < 4 }"></ion-icon>
-        <ion-icon name="star" [ngClass]="{ 'semi-transparent' : package.stars < 5 }"></ion-icon>
+        <label>{{package.data.company}}</label>
+        <ion-icon name="star" [ngClass]="{ 'semi-transparent' : package.data.stars < 1 }"></ion-icon>
+        <ion-icon name="star" [ngClass]="{ 'semi-transparent' : package.data.stars < 2 }"></ion-icon>
+        <ion-icon name="star" [ngClass]="{ 'semi-transparent' : package.data.stars < 3 }"></ion-icon>
+        <ion-icon name="star" [ngClass]="{ 'semi-transparent' : package.data.stars < 4 }"></ion-icon>
+        <ion-icon name="star" [ngClass]="{ 'semi-transparent' : package.data.stars < 5 }"></ion-icon>
       </p>
     </button>
-  </ion-list>
+    </ion-list>
 </ion-content>

@@ -7,84 +7,84 @@
 
 <ion-content padding>
 
-  <div class="register-box">
-    <div class="register-logo">
-      <a href="#">
-        <img src="../../assets/imgs/logo-login.png" alt="Tapp">
-      </a>
+    <div class="register-box">
+        <div class="register-logo">
+            <a href="#">
+                <img src="../../assets/imgs/logo-login.png" alt="Tapp">
+            </a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="register-box-body">
+            <p class="register-box-msg">Registrar un nuevo Usuario</p>
+
+            <form [formGroup]="userData" (ngSubmit)="register()">
+                <div class="form-group has-feedback">
+                    <ion-item>
+                        <ion-label>Compañía</ion-label>
+                        <ion-select formControlName="company_id" (ionChange)="changeCompany($event)">
+                            <ion-option *ngFor="let company of companies" value="{{company.id}}">{{company.name}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </div>
+
+                <div class="form-group has-feedback" *ngIf="otherCompany == true ">
+                    <ion-input placeholder="Nombre de la compañia" formControlName="observations"></ion-input>
+                </div>
+
+                <!-- <div class="form-group has-feedback">
+                    <ion-list radio-group formControlName="worker_type">
+                        <ion-item>
+                            <ion-label>Agente de Viajes</ion-label>
+                            <ion-radio value="travel_agent" checked></ion-radio>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label>Freelance</ion-label>
+                            <ion-radio value="freelance"></ion-radio>
+                        </ion-item>
+                    </ion-list>
+                </div> -->
+
+                <div class="form-group has-feedback">
+                    <ion-input placeholder="Nombres" formControlName="first_name"></ion-input>
+                    <ion-icon name="contact" type="text" class="form-control-feedback"></ion-icon>
+                </div>
+
+                <div class="form-group has-feedback">
+                    <ion-input placeholder="Apellidos" formControlName="last_name"></ion-input>
+                    <ion-icon name="contact" type="text" class="form-control-feedback"></ion-icon>
+                </div>
+
+                <div class="form-group has-feedback">
+                    <ion-input placeholder="Correo" formControlName="email"></ion-input>
+                    <ion-icon name="mail" type="email" class="form-control-feedback"></ion-icon>
+                </div>
+
+                <div class="form-group has-feedback">
+                    <ion-input placeholder="Contraseña" type="password" formControlName="password"></ion-input>
+                    <ion-icon name="lock" class="form-control-feedback"></ion-icon>
+                </div>
+
+                <div class="form-group has-feedback">
+                    <ion-input placeholder="Confirmar Contraseña" type="password" formControlName="confirm_password"></ion-input>
+                    <ion-icon name="lock" class="form-control-feedback"></ion-icon>
+                </div>
+
+                <div class="center-button">
+                    <button ion-button type="submit" [disabled]="!userData.valid" full>Registro</button>
+                </div>
+            </form>
+
+            <div class="social-auth-links text-center">
+                <p><strong>O</strong></p>
+                <a href="#" class="btn btn-block btn-social btn-facebook btn-flat">
+                    <ion-icon name="logo-facebook"></ion-icon>Registrarse usando Facebook</a>
+                <a href="#" class="btn btn-block btn-social btn-google btn-flat">
+                    <ion-icon name="logo-googleplus"></ion-icon>Registrarse usando Google+</a>
+            </div>
+            <p>
+                <a (click)="openLoginPage()">Ya tengo cuenta</a>
+            </p>
+        </div>
     </div>
-    <!-- /.login-logo -->
-    <div class="register-box-body">
-      <p class="register-box-msg">Registrar un nuevo Usuario</p>
-
-      <form [formGroup]="userData" (ngSubmit)="register()">
-        <div class="form-group has-feedback">
-          <ion-item>
-            <ion-label>Compañía</ion-label>
-            <ion-select formControlName="company_id" (ionChange)="changeCompany($event)">
-              <ion-option *ngFor="let company of companies" value="{{company.id}}">{{company.name}}</ion-option>
-            </ion-select>
-          </ion-item>
-        </div>
-
-        <div class="form-group has-feedback" *ngIf="otherCompany == true ">
-          <ion-input placeholder="Nombre de la compañia" formControlName="observations"></ion-input>
-        </div>
-
-        <div class="form-group has-feedback">
-          <ion-list radio-group formControlName="worker_type">
-            <ion-item>
-              <ion-label>Agente de Viajes</ion-label>
-              <ion-radio value="travel_agent" checked></ion-radio>
-            </ion-item>
-            <ion-item>
-              <ion-label>Freelance</ion-label>
-              <ion-radio value="freelance"></ion-radio>
-            </ion-item>
-          </ion-list>
-        </div>
-
-        <div class="form-group has-feedback">
-          <ion-input placeholder="Nombres" formControlName="first_name"></ion-input>
-          <ion-icon name="contact" type="text" class="form-control-feedback"></ion-icon>
-        </div>
-
-        <div class="form-group has-feedback">
-          <ion-input placeholder="Apellidos" formControlName="last_name"></ion-input>
-          <ion-icon name="contact" type="text" class="form-control-feedback"></ion-icon>
-        </div>
-
-        <div class="form-group has-feedback">
-          <ion-input placeholder="Correo" formControlName="email"></ion-input>
-          <ion-icon name="mail" type="email" class="form-control-feedback"></ion-icon>
-        </div>
-
-        <div class="form-group has-feedback">
-          <ion-input placeholder="Contraseña" type="password" formControlName="password"></ion-input>
-          <ion-icon name="lock" class="form-control-feedback"></ion-icon>
-        </div>
-
-        <div class="form-group has-feedback">
-          <ion-input placeholder="Confirmar Contraseña" type="password" formControlName="repassword"></ion-input>
-          <ion-icon name="lock" class="form-control-feedback"></ion-icon>
-        </div>
-
-        <div class="center-button">
-          <button ion-button type="submit" [disabled]="!userData.valid" full>Registro</button>
-        </div>
-      </form>
-
-      <div class="social-auth-links text-center">
-          <p><strong>O</strong></p>
-        <a href="#" class="btn btn-block btn-social btn-facebook btn-flat">
-          <ion-icon name="logo-facebook"></ion-icon>Registrarse usando Facebook</a>
-        <a href="#" class="btn btn-block btn-social btn-google btn-flat">
-          <ion-icon name="logo-googleplus"></ion-icon>Registrarse usando Google+</a>
-      </div>
-      <p>
-        <a (click)="openLoginPage()">Ya tengo cuenta</a>
-      </p>
-    </div>
-  </div>
 
 </ion-content>

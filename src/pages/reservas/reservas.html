@@ -6,52 +6,52 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>Reservas</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>Reservas</ion-title>
+    </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
 
-  <div *ngIf="emptyList==false" class="empty-list">
-    <div>
-      <p>¡HOLA!</p>
+    <div *ngIf="emptyList==false" class="empty-list">
+        <div>
+            <p>¡HOLA!</p>
+        </div>
+        <div>
+            <p>Haz tus reservas y encúentralas aquí.</p>
+        </div>
+        <div>
+            <ion-icon name="document"></ion-icon>
+        </div>
     </div>
-    <div>
-      <p>Haz tus reservas y encúentralas aquí.</p>
-    </div>
-    <div>
-      <ion-icon  name="document"></ion-icon>
-    </div>
-  </div>
 
-  <ion-refresher (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Arrastra para actualizar" refreshingSpinner="circles" refreshingText="Actualizando...">
-    </ion-refresher-content>
-  </ion-refresher>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Arrastra para actualizar" refreshingSpinner="circles" refreshingText="Actualizando...">
+        </ion-refresher-content>
+    </ion-refresher>
 
-  <ion-list>
-    <button ion-item *ngFor="let booking of bookings">
-      <ion-thumbnail item-start>
-        <img src="{{backendProvider.apiServer}}/{{booking.package.photo_dir}}thumbnail-{{booking.package.photo}}">
-      </ion-thumbnail>
-      <h2 class=tittle>{{booking.package.tittle}}</h2>
-      <h2 class=tittle>{{booking.name}}</h2>
-      <p>{{booking.package.title}}</p>
-      <p>Adultos: {{booking.adults}} Niños: {{booking.children}} Infantes: {{booking.babys}}</p>
-      <p>
-        <ion-badge color="primary">{{booking.state}}</ion-badge>
-      </p>
-    </button>
-  </ion-list>
+    <ion-list>
+        <button ion-item *ngFor="let booking of bookings">
+          <ion-thumbnail item-start>
+            <img *ngIf="booking.data.images == null" src="../../assets/imgs/icon.png">
+            <img *ngIf="booking.data.images[0] != null" src="{{backendProvider.mediaServer}}/media/{{booking.data.images[0].fields.file}}">      
+          </ion-thumbnail>
+            <h2 class=tittle>{{booking.data.title}}</h2>
+          <h2 class=tittle>{{booking.name}}</h2>
+          <p>Adultos: {{booking.adults}} Niños: {{booking.children}} Infantes: {{booking.babys}}</p>
+          <p>
+            <ion-badge color="primary">{{booking.state}}</ion-badge>
+          </p>
+        </button>
+    </ion-list>
 
-  <div class="filter-group" text-center *ngIf="emptyList==false">
-    <button ion-button icon-start text-center (click)="doInfinite()">
+    <div class="filter-group" text-center *ngIf="emptyList==false">
+        <button ion-button icon-start text-center (click)="doInfinite()">
       <ion-icon name="ios-cloud-download"></ion-icon>
       Cargar más Resultados
     </button>
-  </div>
+    </div>
 
 </ion-content>

@@ -38,16 +38,11 @@ export class FavoritosPage {
 	getFavorites() {
 		this.packages = [];
 		this.storage.get("session").then((data) => {
-			let info = {
-				"id":data.id
-			}
-			this.backendProvider.getPackageFavorite(info).then((data) => {
-				if (data["user"].favorites.length > 0) {
+			this.backendProvider.getPackageFavorite(data.user).then((result: any[]) => {
+				if (result.length > 0) {
 					this.emptyList = false;
-					for (let index = 0; index < data["user"].favorites.length; index++) {
-						console.log(data["user"].favorites[index].package)
-						this.packages.push(data["user"].favorites[index].package);
-					}
+					this.packages = result
+					console.log(this.packages)
 				}
 			}), (err) => {
 				console.log(err);

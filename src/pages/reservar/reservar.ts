@@ -65,30 +65,30 @@ export class ReservarPage {
 		public storage:Storage
 	) {
 		this.package = navParams.data.package;
-		for (let index = 0; index < this.package.availabilities.length; index++) {
-			if (this.package.availabilities[index].available == true) {
-				let elements = {
-					"id": this.package.availabilities[index].id,
-					"start_date": this.package.availabilities[index].start_date,
-					"end_date": this.package.availabilities[index].end_date
-				}
-				this.availables.push(elements);
+		console.log(this.package)
+		for (let index = 0; index < this.package.data.availability.length; index++) {
+			let elements = {
+				"id": this.package.data.availability[index].pk,
+				"start_date": this.package.data.availability[index].start_date,
+				"end_date": this.package.data.availability[index].end_date
 			}
+			this.availables.push(elements);
 			
 		}
-		console.log(this.availables);
 		this.pricePosition = navParams.data.pricePosition;
 		this.book = this.formBuilder.group({
-			package_id: [parseInt(this.package.id)],
-			availability_id: ['', Validators.required],
+			package: [parseInt(this.package.pk)],
+			availability: ['', Validators.required],
 			email: ['', Validators.compose([Validators.maxLength(70), Validators.pattern('^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$'), Validators.required])],
 			phone: ['', Validators.required],
 			adults: ['0'],
-			children: ['0'],
+			childrens: ['0'],
 			babys: ['0'],
 			observations: [''],
-			price_id: ['', Validators.required],
-			bedroom_id: ['', Validators.required]
+			price: ['', Validators.required],
+			bedroom_id: ['', Validators.required],
+			cost: ['200000'],
+			state: ['Pendiente']
 		});
 	}
 
@@ -97,7 +97,8 @@ export class ReservarPage {
 
 	bookForm() {
 		this.storage.get("session").then((data) => {
-			this.book.value["user_id"] = data.id;
+			this.book.value["created_by"] = data.user;
+			this.book.value["user"] = data.user;
 
 			for (let index = 0; index < this.additionalInfo.length; index++) {
 				for (let p = 0; p < this.additionalInfo[index].length; p++) {
@@ -108,7 +109,7 @@ export class ReservarPage {
 			}
 			
 			this.loading = this.loadingCtrl.create();
-			let postUrl = this.backendProvider.apiServer + "/bookings/book.json";
+			let postUrl = this.backendProvider.apiServer + "/save-booking/";
 			let result: any;
 			this.showLoader();
 			
@@ -122,16 +123,21 @@ export class ReservarPage {
 						"type_document":this.additionalInfo[i][k].type_document,
 						"type_person":this.additionalInfo[i][k].type_person
 					}
+					if(this.additionalInfo[i][k].is_principal == true){
+						elements["passenger_type"] = "1";
+					}else{
+						elements["passenger_type"] = "0";
+					}
 					this.bookingAdditionalInfo.push(elements);
 				}
 			}
 	
-			this.book.value["booking_details"] = this.bookingAdditionalInfo;
+			this.book.value["booking_detail"] = this.bookingAdditionalInfo;
 			if(this.book.value.babys == undefined){
 				this.book.value.babys = 0;
 			}
-			if(this.book.value.children == undefined){
-				this.book.value.children = 0;
+			if(this.book.value.childrens == undefined){
+				this.book.value.childrens = 0;
 			}
 			if(this.book.value.adults == undefined){
 				this.book.value.adults = 0;
@@ -139,16 +145,15 @@ export class ReservarPage {
 
 			console.log(this.book.value)
 			this.backendProvider.postData(this.book.value, postUrl).then(response => {
-				result = response['booking'];
-				if (result.saved) {
-					this.message = 'La reserva se realizó exitosamente';
-					this.presentAlert();
-					this.navCtrl.push(TabsPage, {}, { animate: false });
-				} else {
-					this.message = 'La reserva no pudo realizarse, por favor intentar nuevamente.';
-					this.presentAlert();
-				}
 				this.loading.dismiss();
+				this.message = 'La reserva se realizó exitosamente';
+				this.presentAlert();
+				this.navCtrl.setRoot(TabsPage, {}, { animate: false });
+				this.loading.dismiss();
+			}, (err) => {
+				this.loading.dismiss();
+				this.message = 'La reserva no pudo realizarse, por favor intentar nuevamente.';
+				this.presentAlert();
 			});
 		})
 	}
@@ -281,51 +286,51 @@ export class ReservarPage {
 
 	getPrices(id){
 		this.bedrooms = [];
-		for (let index = 0; index < this.package.prices.length; index++) {
-			let priceId = this.package.prices[index].id;
+		for (let index = 0; index < this.package.data.prices.length; index++) {
+			let priceId = this.package.data.prices[index].pk;
 
 			if (priceId==id) {
-				if (this.package.prices[index].double_price != null) {
+				if (this.package.data.prices[index].double_price) {
 					var elements = {
 						"code":"double_price",
 						"name":"DOBLE",
-						"price":this.package.prices[index].double_price
+						"price":this.package.data.prices[index].double_price
 					}
 					this.bedrooms.push(elements);
 				}
 
-				if (this.package.prices[index].triple_price != null) {
+				if (this.package.data.prices[index].triple_price) {
 					var elements = {
 						"code":"triple_price",
 						"name":"TRIPLE",
-						"price":this.package.prices[index].double_price
+						"price":this.package.data.prices[index].double_price
 					}
 					this.bedrooms.push(elements);
 				}
 
-				if (this.package.prices[index].kid_price != null) {
+				if (this.package.data.prices[index].kid_price) {
 					var elements = {
 						"code":"kid_price",
 						"name":"NIÑO",
-						"price": this.package.prices[index].kid_price
+						"price": this.package.data.prices[index].kid_price
 					}
 					this.bedrooms.push(elements);
 				}
 
-				if (this.package.prices[index].quadruple_price != null) {
+				if (this.package.data.prices[index].quadruple_price) {
 					var elements = {
 						"code":"quadruple_price",
 						"name":"CUADRUPLE",
-						"price": this.package.prices[index].quadruple_price
+						"price": this.package.data.prices[index].quadruple_price
 					}
 					this.bedrooms.push(elements);
 				}
 
-				if (this.package.prices[index].single_price != null) {
+				if (this.package.data.prices[index].single_price) {
 					var elements = {
 						"code":"single_price",
 						"name":"SENCILLA",
-						"price": this.package.prices[index].single_price
+						"price": this.package.data.prices[index].single_price
 					}
 					this.bedrooms.push(elements);
 				}

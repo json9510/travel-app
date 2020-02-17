@@ -72,19 +72,16 @@ export class DetallePaquetePage {
 	}
 
 	getPackage() {
-		let getUrl = this.backendProvider.apiServer + '/packages/detail.json?id=' + this.id;
+		let getUrl = this.backendProvider.apiServer + '/package-detail/' + this.id + '/';
 
 		this.storage.get("session").then((data) => {
-			let info = {
-				"id": data.id
-			}
-			this.backendProvider.getPackageFavorite(info).then((data) => {
-				if (data["user"].favorites.length > 0) {
-					for (let index = 0; index < data["user"].favorites.length; index++) {
-						let packageId = data["user"].favorites[index].package.id;
+			this.backendProvider.getPackageFavorite(data.user).then((result: any[]) => {
+				if (result.length > 0) {
+					for (let index = 0; index < result.length; index++) {
+						let packageId = result[index].package;
 						if (packageId == this.id) {
 							this.favorite = true;
-							this.favoritePackageId = data["user"].favorites[index].id;
+							this.favoritePackageId = result[index].pk;
 						} else {
 							this.favorite = false
 						}
@@ -98,21 +95,9 @@ export class DetallePaquetePage {
 		})
 
 		this.backendProvider.getData(getUrl).then(response => {
-			this.package = response['package'];
-			console.log(this.package)
-			for (let index = 0; index < this.package.availabilities.length; index++) {
-				let startDate = Moment(this.package.availabilities[index].start_date, "YYYY-MM-DD").toDate();
-				let today = Moment(this.today, "YYYY-MM-DD").toDate();
+			this.package = response[0];
 
-				if (today > startDate) {
-					this.available = false;
-					this.package.availabilities[index]["available"] = this.available;
-				} else {
-					this.package.availabilities[index]["available"] = true
-				}
-			}
-
-			this.package.features.map(item => {
+			this.package.data.features.map(item => {
 				if (item.feature.toLowerCase().indexOf('tiquetes') != -1) this.iconosDetalle.isTiquetes = true;
 				if (item.feature.toLowerCase().indexOf('traslados') != -1) this.iconosDetalle.isTraslados = true;
 				if (item.feature.toLowerCase().indexOf('hotel') != -1) this.iconosDetalle.isHotel = true;
@@ -123,16 +108,17 @@ export class DetallePaquetePage {
 				if (item.feature.toLowerCase().indexOf('shows') != -1) this.iconosDetalle.isShows = true;
 			});
 
-			this.firstHotel = this.package.prices[0].id;
-			if (this.package.video != '') {
-				var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
-				var match = this.package.video.match(regExp);
-				(match && match[7].length == 11) ? this.package.video = match[7] : false;
-				this.url = this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${this.package.video}?autoplay=1&controls=0`);
-			}
-			if (this.package.pdf != null) {
-				this.pdf = true;
-			}
+			this.firstHotel = this.package.data.prices[0].pk;
+			// if (this.package.video != '') {
+			// 	var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+			// 	var match = this.package.video.match(regExp);
+			// 	(match && match[7].length == 11) ? this.package.video = match[7] : false;
+			// 	this.url = this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${this.package.video}?autoplay=1&controls=0`);
+			// }
+			// if (this.package.pdf != null) {
+			// 	this.pdf = true;
+			// }
+			console.log(this.package)
 		});
 	}
 
@@ -140,12 +126,12 @@ export class DetallePaquetePage {
 		this.storage.get("session").then((data) => {
 			let info = {}
 			if (this.favorite == false) {
-				info["user_id"] = data.id,
-					info["package_id"] = this.id
+				info["user_id"] = data.user,
+				info["package_id"] = this.id
+				console.log(info)
 				this.backendProvider.addPackageFavorite(info).then((data) => {
 
-					this.favoritePackageId = data["favorite"]["id"];
-					console.log(this.favoritePackageId)
+					this.favoritePackageId = data["id_package"];
 					let message = "Paquete agregado a la lista de favoritos";
 					this.favorite = true;
 					this.showToast(message);
@@ -153,7 +139,8 @@ export class DetallePaquetePage {
 					console.log(err);
 				};
 			} else {
-				info["id"] = this.favoritePackageId;
+				console.log(this.favoritePackageId)
+				info["favorite_id"] = this.favoritePackageId;
 				this.backendProvider.removePackageFavorite(info).then((data) => {
 					let message = "Paquete removido de favoritos";
 					this.favorite = false;
@@ -237,7 +224,7 @@ export class DetallePaquetePage {
 				break;
 		}
 
-		this.finalPrice = currency.symbol + value[2];
+		this.finalPrice = currency + value[2];
 		this.showToast(mensaje);
 	}
 
@@ -247,7 +234,6 @@ export class DetallePaquetePage {
 	}
 
 	setAvailability(availability, index) {
-		console.log('availability_id=' + availability.id + 'position: ' + index);
 		this.availabilityPosition = index;
 	}
 

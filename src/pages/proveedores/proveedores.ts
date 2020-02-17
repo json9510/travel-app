@@ -23,11 +23,11 @@ export class ProveedoresPage {
   getCompanies() {  
   	
 	this.loading = this.loadingCtrl.create();	
-	let getUrl = this.backendProvider.apiServer + "/companies/suppliers.json";
+	let getUrl = this.backendProvider.apiServer + "/companies-list/";
 	
 	this.loading.present().then(() => {
          this.backendProvider.getData(getUrl).then(response => {
-			this.companies = response['companies'];
+			this.companies = response;
 			this.loading.dismiss();
   		});
    });	

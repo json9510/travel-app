@@ -12,7 +12,7 @@ import { DetalleExplorarPage } from '../detalle-explorar/detalle-explorar';
 	templateUrl: 'home.html'
 })
 export class HomePage {
-	packages: any;
+	cruiserPackages: any;
 	nationalPackages: any;
 	internationalPackages: any;
 	searchPackages: any = {};
@@ -24,9 +24,9 @@ export class HomePage {
 	showCancelButton: boolean = false;
 	infiniteScroll: any;
 	next: any;
-	public category: string = 'featured';
+	public category: string = 'national';
 	categoriesPackages: any;
-	public categories: Array<string> = ['featured', 'national', 'international']
+	public categories: Array<string> = ['national', 'international', 'cruiser']
 
 	constructor(
 		public navCtrl: NavController,
@@ -35,20 +35,20 @@ export class HomePage {
 		public modalCtrl: ModalController,
 		public alertCtrl: AlertController
 	) {
-		let getUrl = this.backendProvider.apiServer + "/categories/top.json";
-		console.log(getUrl);
+		// let getUrl = this.backendProvider.apiServer + "/categories/top.json";
+		// console.log(getUrl);
 
-		this.backendProvider.getData(getUrl).then(response => {
-			this.categoriesPackages = response['categories'];
+		// this.backendProvider.getData(getUrl).then(response => {
+		// 	this.categoriesPackages = response['categories'];
 			
-			for (let i = 0; i < this.categories.length; i++) {
-				if (this.categoriesPackages[i].name == "Nacionales") {
-					this.nationalPackages = this.categoriesPackages[i].child_categories;
-				}else if(this.categoriesPackages[i].name == "Internacionales"){
-					this.internationalPackages = this.categoriesPackages[i].child_categories;
-				}
-			}
-		});
+		// 	for (let i = 0; i < this.categories.length; i++) {
+		// 		if (this.categoriesPackages[i].name == "Nacionales") {
+		// 			this.nationalPackages = this.categoriesPackages[i].child_categories;
+		// 		}else if(this.categoriesPackages[i].name == "Internacionales"){
+		// 			this.internationalPackages = this.categoriesPackages[i].child_categories;
+		// 		}
+		// 	}
+		// });
 	}
 
 	ionViewDidEnter() {
@@ -64,28 +64,27 @@ export class HomePage {
 
 	getPackages() {
 		this.showLoader();
-		let getUrl = this.backendProvider.apiServer + "/packages/search.json";
-		let parameters = this.paramSerializer(this.paginator);
+		let getUrlNational = this.backendProvider.apiServer + "/get-packages-national/";
 
-		if (Object.keys(this.filters).length > 0) {
-			parameters += '&' + this.paramSerializer(this.filters);
-		}
-		getUrl += "?" + parameters;
-
-		this.backendProvider.getData(getUrl).then(response => {
-			this.next = response['packages'].length;
-			if (this.previousPackages.length > 0) {
-				this.packages = this.previousPackages.concat(response['packages']);
-				if(this.infiniteScroll){
-					this.infiniteScroll.complete();
-				}
-			} else {
-				this.packages = response['packages'];
-			}
-			this.searchPackages = this.packages;
+		this.backendProvider.getData(getUrlNational).then(response => {
+			this.nationalPackages = response;
 			this.loading.dismiss();
-			console.log(this.packages)
 		});
+
+		let getUrlInternaational = this.backendProvider.apiServer + "/get-packages-international/";
+
+		this.backendProvider.getData(getUrlInternaational).then(response => {
+			this.internationalPackages = response;
+		});
+
+		let getUrlCruiser = this.backendProvider.apiServer + "/get-packages-cruiser/";
+
+		this.backendProvider.getData(getUrlCruiser).then(response => {
+			console.log(response)
+			this.cruiserPackages = response;
+		});
+
+
 	}
 
 	paramSerializer(obj) {
@@ -119,12 +118,12 @@ export class HomePage {
 	}
 
 	doInfinite(infiniteScroll) {
-		if (this.packages.length > 0){ 
-			this.previousPackages = this.packages; 
-		}
-		this.paginator.page++;
-		this.infiniteScroll = infiniteScroll;
-		this.getPackages();
+		// if (this.packages.length > 0){ 
+		// 	this.previousPackages = this.packages; 
+		// }
+		// this.paginator.page++;
+		// this.infiniteScroll = infiniteScroll;
+		// this.getPackages();
 	}
 
 	openDetallePaquetePage(id) {
@@ -148,15 +147,15 @@ export class HomePage {
 	}
 
 	localSearch(ev: any) {
-		this.packages = this.searchPackages;
+		//this.packages = this.searchPackages;
 		const val = ev.target.value;
 
 		// if the value is an empty string don't filter the items
-		if (val && val.trim() != '') {
-			this.packages = this.packages.filter((item) => {
-				return (item.tittle.toLowerCase().indexOf(val.toLowerCase()) > -1);
-			})
-		}
+		// if (val && val.trim() != '') {
+		// 	this.packages = this.packages.filter((item) => {
+		// 		return (item.tittle.toLowerCase().indexOf(val.toLowerCase()) > -1);
+		// 	})
+		// }
 	}
 
 	onTabChanged(tabName) {
