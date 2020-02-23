@@ -80,7 +80,6 @@ export class HomePage {
 		let getUrlCruiser = this.backendProvider.apiServer + "/get-packages-cruiser/";
 
 		this.backendProvider.getData(getUrlCruiser).then(response => {
-			console.log(response)
 			this.cruiserPackages = response;
 		});
 

@@ -45,7 +45,7 @@ export class DetallePaquetePage {
 	favoritePackageId: any;
 	pdf = false;
 	available = true;
-
+	pdf_dir: any;
 	constructor(
 		public navCtrl: NavController,
 		public navParams: NavParams,
@@ -115,10 +115,13 @@ export class DetallePaquetePage {
 			// 	(match && match[7].length == 11) ? this.package.video = match[7] : false;
 			// 	this.url = this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${this.package.video}?autoplay=1&controls=0`);
 			// }
-			// if (this.package.pdf != null) {
-			// 	this.pdf = true;
-			// }
-			console.log(this.package)
+
+			for (let index = 0; index < this.package.data.images.length; index++) {
+				if(this.package.data.images[index].fields.type == ".pdf"){
+					this.pdf = true;
+					this.pdf_dir = this.package.data.images[index].fields.file
+				}
+			}
 		});
 	}
 
@@ -195,9 +198,8 @@ export class DetallePaquetePage {
 	}
 
 	viewPdf() {
-		let pdfUrl = encodeURIComponent(this.backendProvider.apiServer + '/' + this.package.pdf_dir + this.package.pdf);
+		let pdfUrl = this.backendProvider.mediaServer + '/' + 'media' + '/' + this.pdf_dir;
 		this.iab.create('https://docs.google.com/viewer?url=' + pdfUrl);
-		console.log('pdf url= ' + pdfUrl);
 	}
 
 	setCheck(valor, mensaje, currency) {

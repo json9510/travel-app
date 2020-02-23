@@ -11,8 +11,8 @@ import { ToastController } from 'ionic-angular';
 @Injectable()
 export class BackendProvider {
 
-  public apiServer: String = "https://travelappweb.com/api";
-  public mediaServer: String = "https://travelappweb.com";
+  public apiServer: String ="http://pruebas.travelappweb.com/api";
+  public mediaServer: String = "http://pruebas.travelappweb.com";
 
   //public apiServer: String = "http://18.217.214.181/travelapp-pruebas";
   //public apiServer: String = "http://192.168.1.5/TravelApp-Admin";
